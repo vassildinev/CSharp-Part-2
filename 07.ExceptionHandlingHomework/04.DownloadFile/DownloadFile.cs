@@ -8,13 +8,13 @@ class DownloadFile
 {
     static void Main()
     {
+        WebClient webClient = new WebClient();
+
         try
         {
             //SOLUTION
             string fileURL = "http://telerikacademy.com/Content/Images/news-img01.png";
             string fileName = "../../telerik_logo.jpg";
-
-            WebClient webClient = new WebClient();
 
             //file will stored in .../bin/Debug
             webClient.DownloadFile(fileURL, fileName);
@@ -23,6 +23,10 @@ class DownloadFile
         {
             Console.WriteLine("The address is invalid.");
             return;
+        }
+        finally
+        {
+            webClient.Dispose();
         }
         Console.WriteLine("File downloaded to project directory.");
     }
