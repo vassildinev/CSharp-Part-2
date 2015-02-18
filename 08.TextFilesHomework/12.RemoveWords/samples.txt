@@ -1,0 +1,10 @@
+------sample text------
+
+If you lose your car keys, you're in massive trouble!
+So keep your car key in safe place or just remember where it is.
+Your key is very important if you want to use your car.
+That's just the way it is... Can't stop life...
+
+------sample words------
+
+car,key,stop

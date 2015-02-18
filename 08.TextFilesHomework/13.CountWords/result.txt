@@ -1,0 +1,3 @@
+car - 4 occurrence(s)
+key - 4 occurrence(s)
+stop - 2 occurrence(s)
