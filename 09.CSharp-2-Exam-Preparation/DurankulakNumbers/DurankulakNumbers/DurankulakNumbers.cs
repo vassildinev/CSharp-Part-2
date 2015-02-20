@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 class DurankulakNumbers
 {
-    static string AddSpaces(string text, bool preserveAcronyms = false)
+    static string AddSpaces(string text)
     {
         if (string.IsNullOrWhiteSpace(text))
             return string.Empty;
@@ -15,7 +15,7 @@ class DurankulakNumbers
         {
             if (char.IsLower(text[i]))
                 if ((text[i - 1] != ' ' && !char.IsLower(text[i - 1])) ||
-                    (preserveAcronyms && char.IsLower(text[i - 1]) &&
+                    (char.IsLower(text[i - 1]) &&
                      i < text.Length - 1 && !char.IsLower(text[i + 1])))
                     newText.Append(' ');
             newText.Append(text[i]);
@@ -56,7 +56,7 @@ class DurankulakNumbers
             goto CalculateResult;
         }
 
-        input = AddSpaces(input, true);
+        input = AddSpaces(input);
 
         var digitsAsNestedLists = input
             .Split()
