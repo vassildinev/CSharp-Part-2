@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-class Program
+class Tron
 {
     static void Main(string[] args)
     {
