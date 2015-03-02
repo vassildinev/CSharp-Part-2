@@ -1,0 +1,6 @@
+1. Define sub-problem			 ->	# of sub-problems
+2. Guess (part of solution)		 ->	# of choices for guess
+3. Relate sub-problem solutions. -> time/sub-problem	
+4. Recurse and memoize.			 ->	
+   OR Build DP table bottom-up	 ->	
+5. Solve original problem.		 ->	

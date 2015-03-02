@@ -1,14 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 class Methods
 {
     static void Main()
     {
+        // use of class generator
+
+        Generator generator = new Generator(4);
+        var vecs = generator.GetAllCombinations(3);
+        foreach (var vec in vecs)
+        {
+            foreach (var num in vec)
+            {
+                Console.Write(num);
+            }
+            Console.WriteLine();
+        }
+
     }
+    //A JAGGED ARRAY IS VERY SLOW COMPARED TO A MULTIDIMENSIONAL ARRAY!!!!!
 
     // calculates all subset sums from a set of signed integers
     static IEnumerable<int> CalculateSubsetSums(int[] numbers)
@@ -195,7 +211,7 @@ class Methods
         return result;
     }
 
-    //return true
+    // generate permutations
     static bool NextPermutation(char[] array)
     {
         for (int index = array.Length - 2; index >= 0; index--)
@@ -267,5 +283,114 @@ class Methods
         list[currentIndex] = null;
         list.Insert(newIndex, item);
         list.Remove(null);
+    }
+    // count occurrences of a word  - ONLY WORD not part of a word
+    static string pattern = @"\btext\b"; // example pattern
+    static string input = "some text to write a text xaxa sotext";
+    static int occurrences = Regex.Matches(input, pattern, RegexOptions.IgnoreCase).Count;
+
+    // replace all occurrences of a word
+    static string replacement = "MuchText";
+    static string output = Regex.Replace(input, pattern, replacement, RegexOptions.IgnoreCase);
+
+    // finds all permutations
+    static void VectorGenerator(int[] vector, int index)
+    {
+        if (index == -1)
+        {
+            foreach (int value in vector)
+            {
+                Console.Write(value);
+            }
+            Console.WriteLine();
+            return;
+        }
+        for (int i = 0; i <= 1; i++)
+        {
+            vector[index] = i;
+            VectorGenerator(vector, index - 1);
+        }
+    }
+
+    // finds all combinations of a given class - without
+    static void CombinationsGenerator(int[] vector, int index, int currentValueFrom)
+    {
+        if (index == -1)
+        {
+            foreach (int value in vector)
+            {
+                Console.Write(value);
+            }
+            Console.WriteLine();
+        }
+        else
+        {
+            // modify start
+            for (int i = currentValueFrom; i <= 1; i++)
+            {
+                vector[index] = i;
+
+                // always start next value as larger
+                CombinationsGenerator(vector, index - 1, i - 1);
+            }
+        }
+    }
+}
+class Generator
+{
+    int vectorType;
+    public Generator(int vectorType)
+    {
+        this.vectorType = vectorType;
+    }
+
+    private List<int[]> temp;
+    public List<int[]> GetAllVectors(int size)
+    {
+        temp = new List<int[]>();
+        VectorGenerator(new int[size], 0);
+        return temp;
+    }
+
+    private void VectorGenerator(int[] vector, int index)
+    {
+        if (index == vector.Length)
+        {
+            int[] newIntArray = new int[vector.Length];
+            vector.CopyTo(newIntArray, 0);
+
+            temp.Add(newIntArray);
+            return;
+        }
+
+        for (int i = 0; i < vectorType; i++)
+        {
+            vector[index] = i;
+            VectorGenerator(vector, index + 1);
+        }
+    }
+
+    public List<int[]> GetAllCombinations(int size)
+    {
+        temp = new List<int[]>();
+        CombinationsGenerator(new int[size], 0, 0);
+        return temp;
+    }
+    private void CombinationsGenerator(int[] vector, int index, int indexStart)
+    {
+        if (index == vector.Length)
+        {
+            int[] newIntArray = new int[vector.Length];
+            vector.CopyTo(newIntArray, 0);
+
+            temp.Add(newIntArray);
+            return;
+        }
+
+        for (int i = indexStart; i < vectorType; i++)
+        {
+            vector[index] = i;
+            CombinationsGenerator(vector, index + 1, i + 1);
+        }
     }
 }
