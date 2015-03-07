@@ -2,29 +2,83 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 class Methods
 {
+    const char Empty = ' ';
     static void Main()
     {
         // use of class generator
 
-        Generator generator = new Generator(4);
-        var vecs = generator.GetAllCombinations(3);
+        Generator generator = new Generator(12);
+        var vecs = generator.GetAllVectors(6);
+        int i = 0;
         foreach (var vec in vecs)
         {
             foreach (var num in vec)
             {
-                Console.Write(num);
+                i++;
             }
-            Console.WriteLine();
+            
         }
-
+        Console.WriteLine(i);
     }
     //A JAGGED ARRAY IS VERY SLOW COMPARED TO A MULTIDIMENSIONAL ARRAY!!!!!
+
+    // fastest way for cubes to fall down to a certain wall of a given cuboid
+    private static void CubesFallDown(char[, ,] cuboid)
+    {
+        int width = cuboid.GetLength(0);
+        int height = cuboid.GetLength(1);
+        int depth = cuboid.GetLength(2);
+
+        for (int pillarWidth = 0; pillarWidth < width; pillarWidth++)
+        {
+            for (int pillarDepth = 0; pillarDepth < depth; pillarDepth++)
+            {
+                int bottom = 0;
+                for (int pillarHeight = 0; pillarHeight < height; pillarHeight++)
+                {
+                    if (cuboid[pillarWidth, pillarHeight, pillarDepth] != Empty)
+                    {
+                        if (pillarHeight != bottom)
+                        {
+                            cuboid[pillarWidth, bottom, pillarDepth] = cuboid[pillarWidth, pillarHeight, pillarDepth];
+                            cuboid[pillarWidth, pillarHeight, pillarDepth] = Empty;
+                        }
+                        bottom++;
+                    }
+                }
+            }
+        }
+    }
+
+    // generate combinations
+    static void Solver(int lineIndex)
+    {
+        // recursion bottom
+        if (lineIndex >= crossword.Length)
+        {
+            if (IsCrossword())
+            {
+                PrintCrossword();
+                Environment.Exit(0);
+            }
+            return;
+        }
+
+        // recursive call
+        for (int i = 0; i < words.Length; i++)
+        {
+            crossword[lineIndex] = words[i];
+            Solver(lineIndex + 1);
+            crossword[lineIndex] = null;
+        }
+    }
 
     // calculates all subset sums from a set of signed integers
     static IEnumerable<int> CalculateSubsetSums(int[] numbers)
@@ -209,6 +263,32 @@ class Methods
             result *= baseNumber;
         }
         return result;
+    }
+
+    // convert text to digits in number system
+    private static string ConvertTextToDigitsNumberSystems(string number, string[] digits)
+    {
+        string baseNineNumber = string.Empty;
+
+        for (int i = 0; i < number.Length; i++)
+        {
+            for (int j = 0; j < digits.Length; j++)
+            {
+                string digit = digits[j];
+                int digitLength = digit.Length;
+                if (i + digitLength - 1 < number.Length)
+                {
+                    string substr = number.Substring(i, digitLength);
+                    if (substr == digit)
+                    {
+                        baseNineNumber += j;
+                        i += digitLength - 1;
+                        break;
+                    }
+                }
+            }
+        }
+        return baseNineNumber;
     }
 
     // generate permutations

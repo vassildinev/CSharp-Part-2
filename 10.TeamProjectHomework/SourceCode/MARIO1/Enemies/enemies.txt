@@ -1,0 +1,6 @@
+false,40,12,BIG,15,4
+false,56,9,BIG,7,4
+false,30,20,BIG,19,1
+false,40,18,BOSS,19,5
+false,70,18,BOSS,19,5
+false,60,20,SMALL,15,2
